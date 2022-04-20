@@ -1,0 +1,107 @@
+{% extends 'blogapp/base.html' %}
+
+<body>
+
+{% block main_content %}
+{% block promos %}
+
+<!-- Title and subtitle -->
+
+<div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-indigo w3-round">
+  <h1>{{title.title}}</h1>
+  <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444">{{subtitle}}</h3>
+</div>
+
+
+<!-- Form for search promotions, discounts, etc -->
+<form action="{% url 'blogapp:Promos' %}" method="get" class="w3-center">
+
+  <h5 class="w3-indigo">{{category.title}}</h5>
+  <p><b>{{search}}:</b></p>
+  <input type="text" name="categoria" id="categoria">
+
+  <!-- Only show if city was found -->
+  {% if request.GET.categoria %}
+    <a button class="w3-button w3-round-large w3-button w3-indigo" href="{% url 'blogapp:Promos' %}"><b>Listar todo</b></a>
+  {% endif %}
+
+  <!-- Botones -->
+  <input button type="submit" class="w3-button w3-round-large w3-button w3-indigo" value="Buscar">
+</form>
+
+{% if added %}
+<div class="w3-panel w3-round w3-blue">
+    <p><b>{{added}}</b></p>
+</div>
+{% endif %}
+
+
+{% if deleted %}
+<div class="w3-panel w3-round w3-red">
+    <p><b>{{deleted}}</b></p>
+</div>
+{% endif %}
+
+
+{% if promos %}
+
+  {% if edited %}
+  <div class="w3-panel w3-round w3-green">
+      <p><b>{{edited}}</b></p>
+  </div>
+  {% endif %}
+
+  <div class="w3-panel w3-yellow">
+    {% if promos|length == 1 %}
+      <small>Ya contamos con <b>{{promos|length}}</b> promo</small>
+    {% else %}
+      <small>Ya contamos con <b>{{promos|length}}</b> promociones!</small>
+    {% endif %}
+  </div>
+  {% csrf_token %}
+  <!-- Tabla -->
+  <div>
+    <table class="w3-table-all w3-hoverable">
+      <thead>
+        <tr class="w3-indigo w3-wide">
+          <th>Categoria</th>
+          <th>Descripcion</th>
+          <th>Detalle</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for promo in promos %}
+
+          <tr>
+            <th>{{promo.categoria}}</th>
+            <td>{{promo.descripcion}}</td>
+            <td>{{promo.detalle}}</td>
+            <td>
+                <a href="{% url 'blogapp:DeletePromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small">Borrar</a>
+                <a href="{% url 'blogapp:EditPromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small">Editar</a>
+            </td>
+          </tr>
+
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+{% else %}
+  <div class="w3-panel w3-blue-gray"></div>
+    <h5>Aun no contamos promociones agregadas en el blog, tu puedes ser el primero!</h5>
+  </div>
+{% endif %}
+
+<!-- Botones -->
+<div class="w3-bar w3-padding-32">
+  <a button class="w3-button w3-round-large w3-button w3-large w3-indigo" href="{% url 'blogapp:NewPromo' %}"><b>Agregar Promo</b></a>
+</div>
+
+
+{% endblock promos %}
+{% endblock main_content %}
+
+
+</body>

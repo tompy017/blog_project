@@ -1,0 +1,53 @@
+{% extends 'blogapp/promos.html' %}
+{% load static %}
+
+{% block promos %}
+
+
+
+{% if promos %}
+
+
+    <div class="w3-panel w3-yellow">
+        <small>Se encontraron <b>{{promos|length}}</b> promociones.</small>
+    </div>
+
+        <!-- Titulo con busqueda de usuario -->
+    <div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-indigo w3-round">
+        <h1 class="w3-text-red"><b>{{request.GET.categoria.upper}}</b></h1>
+    </div>
+
+    <!-- Tabla -->
+    <div class="w3-padding-16" style="margin-bottom: 50px;">
+        <table class="w3-table-all w3-hoverable">
+            <thead>
+                <tr class="w3-indigo w3-wide">
+                    <th>Categoria</th>
+                    <th>Descripcion</th>
+                    <th>Detalle</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promo in promos %}
+                    <tr>
+                        <th>{{promo.categoria}}</th>
+            
+                        <td>{{promo.descripcion|slice:':70'}}...</td>
+                        <td>{{promo.detalle}}</td>
+
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>    
+{% else %}
+    <div class="w3-panel w3-blue-gray">
+        <h5>Sin resultados momentaneamente</h5>
+    </div>
+{% endif %}
+
+<div class="w3-bar w3-padding-4">
+    <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo" href=" {% url 'blogapp:Promos' %} ">Volver</button></a>
+</div>
+
+{% endblock promos %}

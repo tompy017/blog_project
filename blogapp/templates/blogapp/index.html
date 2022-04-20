@@ -1,0 +1,39 @@
+
+{% extends 'blogapp/base.html' %}
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<body>
+    
+{% block main_content %}
+<!-- Titulo y subtitulo -->
+<div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-indigo w3-round">
+    <h1>{{message}}</h1>
+    <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444">{{subtitle}}</h3>
+</div>
+
+<!-- Contenido (imagen principal) -->
+<div class="w3-panel">
+    <div class="aligncenter w3-black">
+        <img src="{% static 'blogapp/img/banner2.png' %}" class="w3-round" alt="cities">
+        <style> -->
+            .aligncenter {
+            text-align: center;
+            };
+        </style>
+    </div>
+</div>
+
+{% endblock main_content %}
+</body>
+</html>
+
+
