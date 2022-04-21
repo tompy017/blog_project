@@ -80,16 +80,15 @@
                     <tr>
                         <th>{{post.title}}</th>
             
-                        <td>{{post.content|slice:':70'}}...</td>
+                        <td>{{post.content|slice:':70'}} <a class="w3-text-blue" href="{% url 'blogapp:PostDetail' post.id %}">... [Leer más]</a></td>
                         <td>{{post.city}}</td>
                         <td>{{post.author}}</td>
                         <td>{{post.date_added}}</td>
-                        <td>
+                        <td> 
+                            <!-- Botones de tabla -->
                             <a href="{% url 'blogapp:DeletePost' post.id %}" class="w3-button w3-round w3-indigo w3-small">Borrar</a>
                             <a href="{% url 'blogapp:EditPost' post.id %}" class="w3-button w3-round w3-indigo w3-small">Editar</a>
                         </td>
-
-                        
                     </tr>
                 {% endfor %}
             </tbody>

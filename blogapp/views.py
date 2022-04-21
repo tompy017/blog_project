@@ -1,6 +1,9 @@
 
 from django.shortcuts import render, redirect
+# CBV (class based views)
+from django.views.generic.detail import DetailView
 
+# My models and forms
 from blogapp.models import Post, Promo
 from blogapp.forms import NuevoPost, AgregarPromo
 
@@ -80,7 +83,7 @@ def agregar_promos(request):
     """View to add new promotions."""
 
     if request.method != 'POST':
-        # Paso formulario vacio
+        # No data submited. Paso formulario vacio
         form = AgregarPromo()
 
         context = {
@@ -93,7 +96,7 @@ def agregar_promos(request):
         # Traigo las promos para renderizarlas
         promos = Promo.objects.all()
 
-        # Paso formulario con datos ingresados por POST
+        # Data submitted. Paso formulario con datos ingresados por POST
         form = AgregarPromo(request.POST)
         if form.is_valid():
             form.save()
@@ -112,7 +115,7 @@ def agregar_post(request):
     """View to add new posts."""
 
     if request.method != 'POST':
-        # Paso formulario vacio
+        # No data submited. Paso formulario vacio
         form = NuevoPost()
 
         context = {
@@ -125,7 +128,7 @@ def agregar_post(request):
         # Traigo todos los posts para renderizarlos
         posts = Post.objects.order_by('-date_added')
         
-        # Paso formulario con datos ingresados por POST
+        # Data submitted. Paso formulario con datos ingresados por POST
         form = NuevoPost(request.POST)
         if form.is_valid():
             form.save()
@@ -192,7 +195,7 @@ def edit_post(request, post_id):
     post = Post.objects.get(id=post_id)
 
     if request.method != 'POST':
-        # Formulario ya poblado con los datos a editar
+        # No data submitted. Formulario ya poblado con los datos a editar (antes de enviar/guardar)
         form = NuevoPost(instance=post)
 
         context = {
@@ -205,7 +208,7 @@ def edit_post(request, post_id):
     else:
         # Todos los posts para renderizarlos por medio del context
         posts = Post.objects.order_by('-date_added')
-        # Formulario para guardar
+        # Data submitted. Formulario para guardar con los datos enviados por POST
         form = NuevoPost(instance=post, data=request.POST)
 
         if form.is_valid():
@@ -222,13 +225,14 @@ def edit_post(request, post_id):
     
 
 def edit_promo(request, promo_id):
+
     """Edit an existing promo."""
     
     # Promocion a editar
     promo = Promo.objects.get(id=promo_id)
 
     if request.method != 'POST':
-        # Formulario ya poblado con datos a editar
+        # No data submitted. Formulario ya poblado con datos a editar (antes de enviar/guardar)
         form = AgregarPromo(instance=promo)
 
         context = {
@@ -239,9 +243,10 @@ def edit_promo(request, promo_id):
         return render(request, 'blogapp/edit_promo.html', context)
     
     else:
-        # Traigo todas las promos para liostarlas en contexto y renderizarlas
+        # Traigo todas las promos para listarlas en contexto y renderizarlas
         promos = Promo.objects.all()
-        # Formulario para guardar
+
+        # Data submitted. Formulario para guardar con los datos enviados por POST
         form = AgregarPromo(instance=promo, data=request.POST)
 
         if form.is_valid():
@@ -255,3 +260,13 @@ def edit_promo(request, promo_id):
                 'promos': promos,
             }
             return render(request, 'blogapp/promos.html', context)
+
+
+# Class Based Views
+
+class PostDetail(DetailView):
+    """CBV for post detail view."""
+
+    model = Post
+    template = "blogapp/post_detail.html"
+    
