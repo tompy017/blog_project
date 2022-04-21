@@ -8,6 +8,7 @@ app_name = 'blogapp'
 
 
 urlpatterns = [
+    # Inicio
     path('', inicio, name='Inicio'),
     # Promociones
     path('promos/', promos, name='Promos'),
