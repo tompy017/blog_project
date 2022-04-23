@@ -23,12 +23,20 @@
         <div class="w3-panel w3-indigo w3-padding-16 w3-border w3-round">
             <h1>City Travel
             <small class="w3-opacity">blog de turismo urbano</small></h1>
+            
+             
         </div>
     </div>
     <!-- Template's block -->
-    <div class="w3-container w3-sand"> 
-    {% block main_content %}
-    {% endblock main_content %}
+    <div class="w3-container w3-sand">
+        {% if user.is_authenticated %}
+            <h5 style="color:navy">Bienvenido, {{user.username}}.</h5>
+        {% endif %}
+
+        {% block main_content %}
+        {% endblock main_content %}
+
+
     </div>
     
 </body>

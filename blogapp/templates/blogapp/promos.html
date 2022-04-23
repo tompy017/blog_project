@@ -22,7 +22,7 @@
 
   <!-- Only show if city was found -->
   {% if request.GET.categoria %}
-    <a button class="w3-button w3-round-large w3-button w3-indigo" href="{% url 'blogapp:Promos' %}"><b>Listar todo</b></a>
+    <a button class="w3-button w3-round-large w3-button w3-indigo" href="{% url 'blogapp:Promos' %}"><i class="fa fa-list-ul"></i> <b>Listar todo</b></a>
   {% endif %}
 
   <!-- Botones -->
@@ -78,8 +78,8 @@
             <td>{{promo.descripcion}}</td>
             <td>{{promo.detalle}}</td>
             <td>
-                <a href="{% url 'blogapp:DeletePromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small">Borrar</a>
-                <a href="{% url 'blogapp:EditPromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small">Editar</a>
+                <a href="{% url 'blogapp:DeletePromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-trash"></i> Borrar</a>
+                <a href="{% url 'blogapp:EditPromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-edit"></i> Editar</a>
             </td>
           </tr>
 
@@ -96,7 +96,7 @@
 
 <!-- Botones -->
 <div class="w3-bar w3-padding-32">
-  <a button class="w3-button w3-round-large w3-button w3-large w3-indigo" href="{% url 'blogapp:NewPromo' %}"><b>Agregar Promo</b></a>
+  <a button class="w3-button w3-round-large w3-button w3-large w3-indigo" href="{% url 'blogapp:NewPromo' %}"><i class="fa fa-edit"></i> Agregar Promo</a>
 </div>
 
 

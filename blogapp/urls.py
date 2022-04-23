@@ -1,4 +1,4 @@
-"""Url patterns for blogapp."""
+"""Url patterns for blog."""
 
 from django.urls import path
 

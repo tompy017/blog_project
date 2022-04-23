@@ -1,0 +1,18 @@
+{% extends 'blogapp/base.html' %}
+
+{% block main_content  %}
+
+
+<div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-indigo w3-round">
+    <h1 style="color: blue" class="w3-center">Gracias por visitarnos! Nos vemos pronto!</h1>
+</div>
+  
+
+<!-- Redirects to homepage in nseconds-->
+<script>
+    window.setTimeout(function() {
+        window.location.href = "{% url 'blogapp:Inicio' %}";
+    }, 1500);
+</script>
+
+{% endblock main_content %}

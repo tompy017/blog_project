@@ -1,4 +1,4 @@
-{% extends 'blogapp/base.html' %}
+{% extends 'blogapp/index.html' %}
 
 {% block main_content%}
 {% block posts %}
@@ -18,12 +18,12 @@
 
     <!-- Only show if city was found -->
     {% if request.GET.city %}
-        <a button class="w3-button w3-round-large w3-button w3-indigo" href="{% url 'blogapp:Posts' %}"><b>Listar todo</b></a>
+        <a button class="w3-button w3-round-large w3-button w3-indigo" href="{% url 'blogapp:Posts' %}"><i class="fa fa-list-ul"></i> Listar todo</a>
     {% endif %}
 
 
 <!-- Botones -->
-    <input button type="submit" class="w3-button w3-round-large w3-button w3-indigo" value="Buscar">
+        <input button type="submit" class="w3-button w3-round-large w3-button w3-indigo" value="Buscar">
 </form>
 
 {% if added %}
@@ -86,8 +86,8 @@
                         <td>{{post.date_added}}</td>
                         <td> 
                             <!-- Botones de tabla -->
-                            <a href="{% url 'blogapp:DeletePost' post.id %}" class="w3-button w3-round w3-indigo w3-small">Borrar</a>
-                            <a href="{% url 'blogapp:EditPost' post.id %}" class="w3-button w3-round w3-indigo w3-small">Editar</a>
+                            <a href="{% url 'blogapp:DeletePost' post.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-trash"></i> Borrar</a>
+                            <a href="{% url 'blogapp:EditPost' post.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-edit"></i> Editar</a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -103,7 +103,7 @@
 
 <!-- Botones -->
 <div class="w3-bar w3-padding-32">
-    <a button class="w3-button w3-round-large w3-button w3-large w3-indigo" href="{% url 'blogapp:NewPost' %}"><b>Nuevo Post</b></a>
+    <a button class="w3-button w3-round-large w3-button w3-large w3-indigo" href="{% url 'blogapp:NewPost' %}"><i class="fa fa-edit"></i> Nuevo Post</a>
     
 </div>
 
