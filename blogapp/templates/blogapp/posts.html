@@ -26,30 +26,7 @@
         <input button type="submit" class="w3-button w3-round-large w3-button w3-indigo" value="Buscar">
 </form>
 
-{% if added %}
-<div class="w3-panel w3-round w3-blue">
-    <p><b>{{added}}</b></p>
-</div>
-{% endif %}
-
-
-
-{% if deleted %}
-<div class="w3-panel w3-round w3-red">
-    <p><b>{{deleted}}</b></p>
-</div>
-{% endif %}
-
-
-
 {% if posts %}
-
-    {% if edited %}
-        <div class="w3-panel w3-round w3-green">
-            <p><b>{{edited}}</b></p>
-        </div>
-    {% endif %}
-
 
     <div class="w3-panel w3-yellow">
         {% if posts|length == 1 %}
@@ -74,7 +51,6 @@
                     <th></th>
                 </tr>
             </thead>
-        
             <tbody>
                 {% for post in posts %}
                     <tr>

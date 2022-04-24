@@ -1,3 +1,5 @@
+"""Django's default forms for create new posts and promos"""
+
 from django import forms
 
 # App's models

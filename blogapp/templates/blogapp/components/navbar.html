@@ -11,10 +11,10 @@
     {% if user.is_authenticated %}
         
         <a button class="w3-bar-item w3-button w3-round-large w3-button w3-blue w3-right w3-margin-left" href="{% url 'users:logout' %}"><b>Log out</b></a>
-        {% comment %} <p class="w3 bar-item w3-right"><b>{{user.username}}</b></p> {% endcomment %}
         <span class="fa fa-user w3-right w3-margin-right w3-center"><br><b>{{user.username}}</b></span>
     {% else %}
-        <a button class="w3-bar-item w3-button w3-round-large w3-button w3-blue w3-right" href="{% url 'users:login' %}"><b>Log in</b></a>
+        <a button class="w3-bar-item w3-button w3-round-large w3-button w3-blue w3-right w3-margin-left" href="{% url 'users:register' %}"><b>Sign up</b></a>
+        <a button class="w3-bar-item w3-button w3-round-large w3-button w3-blue w3-right w3-margin-right" href="{% url 'users:login' %}"><b>Log in</b></a>
     {% endif %}
 
 </div>

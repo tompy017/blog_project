@@ -20,6 +20,10 @@
     <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444">{{subtitle}}</h3>
 </div>
 
+{% if user.is_authenticated %}
+<h5 style="color:navy">Bienvenid@, <b>{{user.username}}</b>.</h5>
+{% endif %}
+
 <!-- Contenido (imagen principal) -->
 <div class="w3-panel">
     <div class="aligncenter w3-black">
