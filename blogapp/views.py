@@ -2,6 +2,9 @@
 from django.shortcuts import render, redirect
 # CBV (class based views)
 from django.views.generic.detail import DetailView
+# Decorators
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin # For loguin required of a class
 
 # My models and forms
 from blogapp.models import Post, Promo
@@ -78,7 +81,7 @@ def posts(request):
         }
         return render(request, 'blogapp/posts.html', context)
 
-
+@login_required
 def agregar_promos(request):
     """View to add new promotions."""
 
@@ -101,7 +104,7 @@ def agregar_promos(request):
     }
     return render(request, 'blogapp/new_promo.html', context)
 
-
+@login_required
 def agregar_post(request):
     """View to add new posts."""
 
@@ -122,7 +125,7 @@ def agregar_post(request):
     }
     return render(request, 'blogapp/new_post.html', context)
 
-
+@login_required
 def delete_post(request, post_id):
     """View for deleting posts."""
     # Try para obtener post por medio de su id con metodo get 
@@ -134,7 +137,7 @@ def delete_post(request, post_id):
     except Exception as exc:
         return redirect('blogapp:Inicio')
     
-
+@login_required
 def delete_promo(request, promo_id):
     """View for deleting promos."""
     # Try para buscar promo por id
@@ -146,7 +149,7 @@ def delete_promo(request, promo_id):
     except Exception as exc:
         return redirect('blogapp:Inicio')
 
-
+@login_required
 def edit_post(request, post_id):
     """Edit an existing post."""
     # Post que se va a editar
@@ -171,7 +174,7 @@ def edit_post(request, post_id):
     }
     return render(request, 'blogapp/edit_post.html', context)
     
-
+@login_required
 def edit_promo(request, promo_id):
     """Edit an existing promo."""
     # Promocion a editar
@@ -198,7 +201,8 @@ def edit_promo(request, promo_id):
 
 
 # Django's Class Based Views
-class PostDetail(DetailView):
+# Como es una clase no funciona el @loguin_required. Se usa LoguinRequiredMixin)
+class PostDetail(LoginRequiredMixin, DetailView):
     """CBV for post detail view."""
     # Model de donde hereda
     model = Post

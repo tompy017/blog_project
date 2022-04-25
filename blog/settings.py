@@ -130,3 +130,6 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # To redirect to homepage when logged in
 LOGIN_REDIRECT_URL = 'blogapp:Inicio'
+
+# @login_required decoretor
+LOGIN_URL = 'users:login'

@@ -9,6 +9,6 @@ urlpatterns = [
     # Django's defaults auth urls login/logout
     path('', include('django.contrib.auth.urls')),
     # Registration page
-    path('register/', register, name='register'),
+    path('signup/', register, name='register'),
 ]
 
