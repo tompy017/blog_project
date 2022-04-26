@@ -5,10 +5,13 @@ from users.views import *
 
 app_name = 'users'
 
+
 urlpatterns = [
     # Django's defaults auth urls login/logout
     path('', include('django.contrib.auth.urls')),
-    # Registration page
+    # Registration/Modification patterns
     path('signup/', register, name='register'),
+    path('update/', update_profile, name='UpdateProfile'),
+    path('<user_id>/', profile, name='Profile')
 ]
 

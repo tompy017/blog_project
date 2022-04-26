@@ -6,6 +6,15 @@
 <h5 style="color: red">Hubo un problema con los datos.</h5>
 {% endif %}
 
+<div class="w3-panel w3-pale-red w3-display-container">
+    <span onclick="this.parentElement.style.display='none'"
+    class="w3-button w3-large w3-display-topright">&times;</span>
+    <h3>Requisitos</h3>
+    {% for warning in warnings %}
+    <ul>{{warning}}</ul>
+    {% endfor %}
+
+  </div>
 
 <form action="{% url 'users:register' %}" method="post">
     {% csrf_token %}
