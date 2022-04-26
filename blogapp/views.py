@@ -34,7 +34,6 @@ def inicio(request):
     return render(request, 'blogapp/index.html', context)
 
 
-
 def promos(request):
     """View for promotions page."""
     # Para buscar si el usuario tiene avatar
@@ -262,10 +261,30 @@ def edit_promo(request, promo_id):
 
 # Django's Class Based Views
 # Como es una clase no funciona el @loguin_required. Se usa LoguinRequiredMixin)
-class PostDetail(LoginRequiredMixin, DetailView):
-    """CBV for post detail view."""
-    # Model de donde hereda
-    model = Post
-    # Ubicacion del template
-    template = "blogapp/post_detail.html"
+# class PostDetail(LoginRequiredMixin, DetailView):
+#     """CBV for post detail view."""
+#     # Model de donde hereda
+#     model = Post
+#     # Ubicacion del template
+#     template = "blogapp/post_detail.html"
+
+@login_required
+def post_detail(request, post_id):
+    """Display full post."""
+    # Post que se va a mostrar
+    post = Post.objects.get(id=post_id)
+
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
     
+    context = {
+        'title': 'Detail',
+        'subtitle': post.title,
+        'avatar': avatar,
+        'post': post
+    }
+    return render(request, 'blogapp/post_detail.html', context)

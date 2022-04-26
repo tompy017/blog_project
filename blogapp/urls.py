@@ -20,5 +20,5 @@ urlpatterns = [
     path('pages/new_post/', agregar_post, name='NewPost'),
     path('pages/delete_post/<post_id>/', delete_post, name='DeletePost'),
     path('pages/edit_post/<post_id>/', edit_post, name='EditPost'),
-    path('pages/<pk>/', PostDetail.as_view(), name='PostDetail'),
+    path('pages/<post_id>/', post_detail, name='PostDetail'),
 ]
