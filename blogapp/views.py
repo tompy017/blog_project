@@ -2,29 +2,49 @@
 from django.shortcuts import render, redirect
 # CBV (class based views)
 from django.views.generic.detail import DetailView
+# Decorators
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin # For loguin required of a class
+from django.contrib.auth.models import User
+
 
 # My models and forms
 from blogapp.models import Post, Promo
 from blogapp.forms import NuevoPost, AgregarPromo
+from users.models import Avatar
 
 # Create your views here.
 def inicio(request):
     """Home page for blogapp."""
 
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
     context = {
+        'avatar': avatar,
         'title': 'Inicio',
         'message': 'Bienvenidos a City Travel',
         'subtitle': '¿Planificando tu próximo viaje? '
-            'Lee las recomendaciones realizadas por los propios miembros del blog!',
-    }
+                'Lee las recomendaciones realizadas por los propios miembros del blog!',
+        }
     return render(request, 'blogapp/index.html', context)
 
 
 def promos(request):
     """View for promotions page."""
-    # Defino variable conteniendo todas las promociones
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+    
+    # Defino variable conteniendo todas las promociones  
     promos = Promo.objects.all()
-
     # Buscar promos por categoria
     category = request.GET.get('categoria')
 
@@ -35,6 +55,7 @@ def promos(request):
             'category': category,
             'search': 'Buscar por categoría (ej: "Alojamiento")',
             'promos': promos,
+            'avatar': avatar,
         }
         return render(request, 'blogapp/promos.html', context)
 
@@ -45,12 +66,20 @@ def promos(request):
             'title': 'Promos',
             'subtitle': '¡Mira las promociones que hay para tu viaje!',
             'search': 'Buscar por categoría (ej: "Alojamiento")',
+            'avatar': avatar,
         }
         return render(request, 'blogapp/promos.html', context)
 
 
 def posts(request):
     """View for posts page."""
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
     # Defino variable conteniendo todos los posts ordenados de mas nuevo a mas antiguo
     posts = Post.objects.order_by('-date_added')
 
@@ -64,7 +93,8 @@ def posts(request):
             'title': 'Posts',
             'city': city,
             'search': 'Buscar por ciudad',
-            'posts': posts
+            'posts': posts,
+            'avatar': avatar,
         }
         return render(request, 'blogapp/posts.html', context)
     
@@ -74,13 +104,20 @@ def posts(request):
             'posts': posts,
             'title': 'Posts',
             'subtitle': '¡El listado completo de nuestros posts!',
-            'search': 'Buscar por ciudad'
+            'search': 'Buscar por ciudad',
+            'avatar': avatar,
         }
         return render(request, 'blogapp/posts.html', context)
 
-
+@login_required
 def agregar_promos(request):
     """View to add new promotions."""
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
 
     if request.method != 'POST':
         # No data submited. Paso formulario vacio
@@ -98,12 +135,20 @@ def agregar_promos(request):
     context = {
         'form': form,
         'title': 'Agregar Promo',
+        'avatar': avatar,
     }
     return render(request, 'blogapp/new_promo.html', context)
 
-
+@login_required
 def agregar_post(request):
     """View to add new posts."""
+
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
 
     if request.method != 'POST':
         # No data submited. Paso formulario vacio
@@ -119,10 +164,11 @@ def agregar_post(request):
     context = {
         'form': form, 
         'title': 'Nuevo Post',
+        'avatar': avatar,
     }
     return render(request, 'blogapp/new_post.html', context)
 
-
+@login_required
 def delete_post(request, post_id):
     """View for deleting posts."""
     # Try para obtener post por medio de su id con metodo get 
@@ -134,7 +180,7 @@ def delete_post(request, post_id):
     except Exception as exc:
         return redirect('blogapp:Inicio')
     
-
+@login_required
 def delete_promo(request, promo_id):
     """View for deleting promos."""
     # Try para buscar promo por id
@@ -146,9 +192,16 @@ def delete_promo(request, promo_id):
     except Exception as exc:
         return redirect('blogapp:Inicio')
 
-
+@login_required
 def edit_post(request, post_id):
     """Edit an existing post."""
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
     # Post que se va a editar
     post = Post.objects.get(id=post_id)
 
@@ -168,12 +221,20 @@ def edit_post(request, post_id):
         'title': 'Edit',
         'subtitle': post.title,
         'form': form,
+        'avatar': avatar,
     }
     return render(request, 'blogapp/edit_post.html', context)
     
-
+@login_required
 def edit_promo(request, promo_id):
     """Edit an existing promo."""
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
     # Promocion a editar
     promo = Promo.objects.get(id=promo_id)
 
@@ -193,15 +254,37 @@ def edit_promo(request, promo_id):
         'title': 'Edit',
         'subtitle': promo.descripcion,
         'form': form,
+        'avatar': avatar,
     }
     return render(request, 'blogapp/edit_promo.html', context)
 
 
 # Django's Class Based Views
-class PostDetail(DetailView):
-    """CBV for post detail view."""
-    # Model de donde hereda
-    model = Post
-    # Ubicacion del template
-    template = "blogapp/post_detail.html"
+# Como es una clase no funciona el @loguin_required. Se usa LoguinRequiredMixin)
+# class PostDetail(LoginRequiredMixin, DetailView):
+#     """CBV for post detail view."""
+#     # Model de donde hereda
+#     model = Post
+#     # Ubicacion del template
+#     template = "blogapp/post_detail.html"
+
+@login_required
+def post_detail(request, post_id):
+    """Display full post."""
+    # Post que se va a mostrar
+    post = Post.objects.get(id=post_id)
+
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
     
+    context = {
+        'title': 'Detail',
+        'subtitle': post.title,
+        'avatar': avatar,
+        'post': post
+    }
+    return render(request, 'blogapp/post_detail.html', context)

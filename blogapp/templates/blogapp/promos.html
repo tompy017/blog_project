@@ -7,7 +7,7 @@
 
 <!-- Title and subtitle -->
 
-<div class="w3-panel w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-indigo w3-round">
+<div class="w3-container w3-padding-16 w3-center w3-topbar w3-bottombar w3-border-indigo w3-round">
   <h1>{{title.title}}</h1>
   <h3 class="w3-opacity" style="text-shadow:1px 1px 0 #444">{{subtitle}}</h3>
 </div>
@@ -40,7 +40,7 @@
   </div>
   {% csrf_token %}
   <!-- Tabla -->
-  <div>
+  <div class="w3-container">
     <table class="w3-table-all w3-hoverable">
       <thead>
         <tr class="w3-indigo w3-wide">
@@ -52,14 +52,15 @@
       </thead>
       <tbody>
         {% for promo in promos %}
-
           <tr>
             <th>{{promo.categoria}}</th>
             <td>{{promo.descripcion}}</td>
             <td>{{promo.detalle}}</td>
             <td>
+              {% if user.is_authenticated %}
                 <a href="{% url 'blogapp:DeletePromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-trash"></i> Borrar</a>
                 <a href="{% url 'blogapp:EditPromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-edit"></i> Editar</a>
+              {% endif %}
             </td>
           </tr>
 
