@@ -4,11 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 # from django.contrib.auth.forms import UserCreationForm
+# from django.views.generic.detail import DetailView
+from django.db.models import Q
+from django.urls.base import reverse
 
-from django.views.generic.detail import DetailView
-
-from users.forms import RegisterForm, UpdateProfileForm
-from users.models import Avatar
+from users.forms import RegisterForm, UpdateProfileForm, MessageForm
+from users.models import Avatar, Message
 
 # Create your views here.
 
@@ -28,8 +29,8 @@ def register(request):
             new_user = form.save()
             # Para loguearse al crear nuevo usuario uso funcion login() de django.contrib.auth
             login(request, new_user)
-            # Redirecciono a Inicio con usuario ya logueado
-            return redirect('blogapp:Inicio')
+            # Redirecciono a Perfil con usuario ya logueado
+            return redirect(reverse('users:Profile', args=[id]))
 
     context = {
         'form': form,
@@ -91,6 +92,12 @@ def profile(request, user_id):
     except:
         avatar = ''
 
+    # # Messages
+    # messages = Message.objects.filter(Q(reseiver=user) | Q(sender=user))
+
+
+
+
     context = {
         'user': user,
         'avatar': avatar,
@@ -98,3 +105,66 @@ def profile(request, user_id):
     }
     return render(request, 'users/profile.html', context)
 
+@login_required
+def messages(request):
+    
+    user = request.user
+    
+    messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-sent_at')
+
+    context = {
+        'title': 'Inbox',
+        'user': user,
+        'messages': messages,
+    }
+
+    return render(request, 'users/messages.html', context)
+
+
+def new_message(request):
+    """Sending new messages."""
+    
+    user = request.user
+
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    if request.method != 'POST':
+        # No data submited. Paso formulario vacio
+        form = MessageForm()
+    
+    else:
+        # Data submitted. Paso formulario con datos ingresados por POST
+        form = MessageForm(data=request.POST)
+
+        if form.is_valid():
+            data = form.cleaned_data
+
+            msg = Message(sender=request.user, receiver=data['receiver'], msg=data['msg'])
+
+
+            msg.save()
+            return redirect('users:Messages')
+    
+    context = {
+        'form': form,
+        'title': 'New message',
+        'avatar':avatar,
+    }
+    return render(request, 'users/new_msg.html', context)
+
+
+def delete_msg(request, msg_id):
+    """View for deleting msg."""
+    # Try para buscar promo por id
+    try:
+        msg = Message.objects.get(id=msg_id)
+        msg.delete()
+        return redirect('users:Messages')
+    # Si levanta una excepcion renderiza a la pagina de inicio
+    except Exception as exc:
+        return redirect('blogapp:Inicio')
