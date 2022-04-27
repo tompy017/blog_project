@@ -19,8 +19,9 @@
             </button>
 
             <div class="w3-dropdown-content w3-bar-block w3-card-4">
-                <a href="{% url 'users:Profile' user.id %}" class="w3-bar-item w3-button">Perfil</a>
-                <a href="{% url 'users:logout' %}" class="w3-bar-item w3-button">Log Out</a>
+                <a href="{% url 'users:Profile' user.id %}" class="w3-bar-item w3-button"><i class="fa fa-user-o"></i> Perfil</a>
+                <a href="{% url 'users:Messages' %}" class="w3-bar-item w3-button"><i class="fa fa-envelope-o"></i> Mensajes</a>
+                <a href="{% url 'users:logout' %}" class="w3-bar-item w3-button"><i class="fa fa-window-close-o"></i> Log Out</a>
             </div>
         </div>
     {% else %}

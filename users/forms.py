@@ -2,6 +2,8 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 
+from users.models import Message
+
 class RegisterForm(UserCreationForm):
     """Customization for new user registration form."""
     username = forms.CharField(label='Usuario')
@@ -37,3 +39,15 @@ class UpdateProfileForm(UserCreationForm):
             'password1',
             'password2',
         ]
+
+
+class MessageForm(forms.ModelForm):
+    """DM's form"""
+    class Meta:
+        model = Message  # Modelo del cual importa
+        fields = [
+            'receiver',
+            'msg',
+            ]
+        #  Widget para agrandar el area de texto(TextField) a 80 columnas
+        widgets = {'msg': forms.Textarea(attrs={'cols': 80})}
