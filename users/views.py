@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.urls.base import reverse
 
-from users.forms import RegisterForm, UpdateProfileForm, MessageForm
+from users.forms import RegisterForm, UpdateProfileForm, MessageForm, AvatarForm
 from users.models import Avatar, Message
 
 # Create your views here.
@@ -105,6 +105,47 @@ def profile(request, user_id):
     }
     return render(request, 'users/profile.html', context)
 
+
+def update_avatar(request):
+    """Update user profile."""
+    
+    user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    if request.method != 'POST':
+        # No data submited. Paso formulario vacio
+        form = AvatarForm()
+    
+    else:
+        form = AvatarForm(request.POST, request.FILES)
+
+        if form.is_valid():
+            avatars = Avatar.objects.filter(user=user)
+
+            if len(avatars) > 0:
+                new_avatar = avatars[0]
+                new_avatar.avatar = form.cleaned_data['avatar']
+                new_avatar.save()
+            else:
+                new_avatar = Avatar(user=user, avatar=form.cleaned_data['avatar'])
+                new_avatar.save()
+        return redirect("Profile")
+    
+    context = {
+        'title': 'Update Avatar',
+        'subtitle': 'Actualizar avatar',
+        'form': form,
+        'avatar': avatar
+    }
+    return render(request, 'users/update_avatar.html', context)
+
+
+
 @login_required
 def messages(request):
     
@@ -112,10 +153,15 @@ def messages(request):
     
     messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-sent_at')
 
+    received = messages.filter(receiver=user).order_by('-sent_at')
+    sent = messages.filter(sender=user).order_by('-sent_at')
+
     context = {
         'title': 'Inbox',
         'user': user,
         'messages': messages,
+        'received': received,
+        'sent':sent
     }
 
     return render(request, 'users/messages.html', context)
@@ -142,12 +188,14 @@ def new_message(request):
         form = MessageForm(data=request.POST)
 
         if form.is_valid():
-            data = form.cleaned_data
 
-            msg = Message(sender=request.user, receiver=data['receiver'], msg=data['msg'])
-
-
+            msg = form.save(commit=False)
+            msg.sender = request.user
             msg.save()
+            # data = form.cleaned_data
+
+            # msg = Message(sender=request.user, receiver=data['receiver'], msg=data['msg'])
+
             return redirect('users:Messages')
     
     context = {

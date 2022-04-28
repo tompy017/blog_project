@@ -12,6 +12,7 @@ urlpatterns = [
     # Registration/Modification patterns
     path('signup/', register, name='register'),
     path('update/', update_profile, name='UpdateProfile'),
+    path('update/avatar/', update_avatar, name='UpdateAvatar'),
     path('messages/', messages, name='Messages'),
     path('messages/delete/<msg_id>/', delete_msg, name='DeleteMsg'),
     path('messages/new_msg/', new_message, name='NewMsg'),

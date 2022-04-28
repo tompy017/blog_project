@@ -2,7 +2,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
 
-from users.models import Message
+from users.models import Avatar, Message
 
 class RegisterForm(UserCreationForm):
     """Customization for new user registration form."""
@@ -39,6 +39,14 @@ class UpdateProfileForm(UserCreationForm):
             'password1',
             'password2',
         ]
+
+
+class AvatarForm(forms.ModelForm):
+    """Avatar form"""
+
+    class Meta:
+        model = Avatar
+        fields = ['avatar',]
 
 
 class MessageForm(forms.ModelForm):

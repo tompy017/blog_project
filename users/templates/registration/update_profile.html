@@ -10,8 +10,13 @@
 <h5 style="color: red">Hubo un problema con los datos.</h5>
 {% endif %}
 
+<div div class="w3-container w3-card-4">
+    <p>Para modificar su avatar ingrese aqui <a class="w3-button w3-black w3-border" href="{% url 'users:UpdateAvatar' %}"><i class="fa fa-file-image-o"></i></a></p>
+</div>
+
+
 <!-- Username to display -->
-<div class="w3-panel w3-indigo w3-round-xlarge">
+<div class="w3-card w3-indigo w3-round-xlarge">
     <h2 class="w3-center"><b>{{user.username}}</b></h2>
 </div>
 
