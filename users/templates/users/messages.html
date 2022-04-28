@@ -6,6 +6,9 @@
     <h3>{{title}}</h3>
 </div>
 
+<!--  Table Inbox -->
+
+<!-- Received messages -->
 <div class="w3-container w3-padding-16">
     <p class="w3-monospace w3-indigo">Bandeja de entrada</p>
     <table class="w3-table-all w3-card-4">
@@ -34,6 +37,7 @@
     </table>
 </div>    
 
+<!-- Sent messages -->
 <div class="w3-container w3-padding-16">
     <p class="w3-monospace w3-indigo">Bandeja de salida</p>
     <table class="w3-table-all w3-card-4">
@@ -62,14 +66,10 @@
     </table>
 </div>    
 
-
-
-
+<!-- Buttons -->
 <div class="w3-bar w3-padding-32 w3-center">
     <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo" href=" {% url 'users:NewMsg' %} ">Nuevo</button></a>
     <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo" href=" {% url 'users:Profile' user.id %} ">Volver</button></a>
 </div>
-
-
 
 {% endblock messages %}

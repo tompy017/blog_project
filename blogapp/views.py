@@ -1,19 +1,16 @@
+"""Views for blog; home, posts and promos"""
 
 from django.shortcuts import render, redirect
-# CBV (class based views)
-from django.views.generic.detail import DetailView
 # Decorators
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin # For loguin required of a class
-from django.contrib.auth.models import User
-
-
 # My models and forms
 from blogapp.models import Post, Promo
 from blogapp.forms import NuevoPost, AgregarPromo
 from users.models import Avatar
 
+
 # Create your views here.
+
 def inicio(request):
     """Home page for blogapp."""
 
@@ -85,10 +82,8 @@ def posts(request):
 
     # Para buscar posts por ciudad
     city = request.GET.get('city')
-
     if city:
         posts = Post.objects.filter(city__icontains=city)
-
         context = {
             'title': 'Posts',
             'city': city,
@@ -109,6 +104,7 @@ def posts(request):
         }
         return render(request, 'blogapp/posts.html', context)
 
+
 @login_required
 def agregar_promos(request):
     """View to add new promotions."""
@@ -126,10 +122,8 @@ def agregar_promos(request):
     else:
         # Data submitted. Paso formulario con datos ingresados por POST
         form = AgregarPromo(request.POST)
-
         if form.is_valid():
             form.save()
-            # Save y vuelve a promos
             return redirect('blogapp:Promos')
 
     context = {
@@ -138,6 +132,7 @@ def agregar_promos(request):
         'avatar': avatar,
     }
     return render(request, 'blogapp/new_promo.html', context)
+
 
 @login_required
 def agregar_post(request):
@@ -168,9 +163,11 @@ def agregar_post(request):
     }
     return render(request, 'blogapp/new_post.html', context)
 
+
 @login_required
 def delete_post(request, post_id):
     """View for deleting posts."""
+
     # Try para obtener post por medio de su id con metodo get 
     try:
         post = Post.objects.get(id=post_id)
@@ -179,10 +176,12 @@ def delete_post(request, post_id):
     # Si levanta una excepcion ya que no obtuvo registro
     except Exception as exc:
         return redirect('blogapp:Inicio')
-    
+
+
 @login_required
 def delete_promo(request, promo_id):
     """View for deleting promos."""
+
     # Try para buscar promo por id
     try:
         promo = Promo.objects.get(id=promo_id)
@@ -192,9 +191,11 @@ def delete_promo(request, promo_id):
     except Exception as exc:
         return redirect('blogapp:Inicio')
 
+
 @login_required
 def edit_post(request, post_id):
     """Edit an existing post."""
+
     # Para buscar si el usuario tiene avatar
     try:
         avatar = Avatar.objects.get(user=request.user.id)
@@ -212,7 +213,6 @@ def edit_post(request, post_id):
     else:
         # Data submitted. Formulario para guardar con los datos enviados por POST
         form = NuevoPost(instance=post, data=request.POST)
-
         if form.is_valid():
             form.save()
             return redirect('blogapp:Posts')
@@ -225,9 +225,11 @@ def edit_post(request, post_id):
     }
     return render(request, 'blogapp/edit_post.html', context)
     
+
 @login_required
 def edit_promo(request, promo_id):
     """Edit an existing promo."""
+
     # Para buscar si el usuario tiene avatar
     try:
         avatar = Avatar.objects.get(user=request.user.id)
@@ -245,7 +247,6 @@ def edit_promo(request, promo_id):
     else:
         # Data submitted. Formulario para guardar con los datos enviados por POST
         form = AgregarPromo(instance=promo, data=request.POST)
-
         if form.is_valid():
             form.save()
             return redirect('blogapp:Promos')
@@ -259,18 +260,10 @@ def edit_promo(request, promo_id):
     return render(request, 'blogapp/edit_promo.html', context)
 
 
-# Django's Class Based Views
-# Como es una clase no funciona el @loguin_required. Se usa LoguinRequiredMixin)
-# class PostDetail(LoginRequiredMixin, DetailView):
-#     """CBV for post detail view."""
-#     # Model de donde hereda
-#     model = Post
-#     # Ubicacion del template
-#     template = "blogapp/post_detail.html"
-
 @login_required
 def post_detail(request, post_id):
     """Display full post."""
+    
     # Post que se va a mostrar
     post = Post.objects.get(id=post_id)
 

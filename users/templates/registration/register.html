@@ -2,9 +2,6 @@
 
 {% block main_content  %}
 
-{% if form.errors  %}
-<h5 style="color: red">Hubo un problema con los datos.</h5>
-{% endif %}
 
 <div class="w3-panel w3-pale-red w3-display-container">
     <span onclick="this.parentElement.style.display='none'"
@@ -12,10 +9,16 @@
     <h3>Requisitos</h3>
     {% for warning in warnings %}
     <ul>{{warning}}</ul>
-    {% endfor %}
+    {% endfor %}    
+</div>
 
-  </div>
+<!-- Form -->
 
+{% if form.errors  %}
+<h5 style="color: red">Hubo un problema con los datos.</h5>
+{% endif %}
+
+<!-- Formulario registro -->
 <form action="{% url 'users:register' %}" method="post">
     {% csrf_token %}
 
@@ -29,7 +32,6 @@
         <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo" href=" {% url 'blogapp:Inicio' %} ">Volver</button></a>
         </div>
     </form>
-
 </form>
 
 {% endblock main_content %}

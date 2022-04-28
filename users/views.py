@@ -1,33 +1,34 @@
+"""User's views for register; update profile and messageing between users."""
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import login
-from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
-# from django.contrib.auth.forms import UserCreationForm
-# from django.views.generic.detail import DetailView
-from django.db.models import Q
 from django.urls.base import reverse
+# Decorators
+from django.contrib.auth.decorators import login_required
+# For make complex lookups (AND/OR)
+from django.db.models import Q
 
+# Defined User's models and forms
 from users.forms import RegisterForm, UpdateProfileForm, MessageForm, AvatarForm
 from users.models import Avatar, Message
 
+
 # Create your views here.
+
 
 def register(request):
     """Register a new user."""
 
     if request.method != 'POST':
         # No data submited. Paso formulario vacio
-        # form = UserCreationForm()
         form = RegisterForm()
 
     else:
         # Paso formulario con datos ingresados por POST
         form = RegisterForm(data=request.POST)
-
         if form.is_valid():
             new_user = form.save()
-            # Para loguearse al crear nuevo usuario uso funcion login() de django.contrib.auth
+            # Para loguearse al crear nuevo usuario
             login(request, new_user)
             # Redirecciono a Perfil con usuario ya logueado
             return redirect(reverse('users:Profile', args=[id]))
@@ -42,6 +43,7 @@ def register(request):
         ]
     }
     return render(request, 'registration/register.html', context)
+
 
 @login_required
 def update_profile(request):
@@ -66,7 +68,8 @@ def update_profile(request):
             edited_user = form.save()
             # Login if user requested a password or username change (if not, user  would be logged out)
             login(request, edited_user)
-            return redirect('blogapp:Inicio')
+            return redirect(reverse('users:Profile', args=[id]))
+
     context = {
         'title': 'Actualizar',
         'subtitle': 'Actualizar usuario',
@@ -76,27 +79,17 @@ def update_profile(request):
     return render(request, 'registration/update_profile.html', context)
 
 
-# CBV
-
-# class Profile(LoginRequiredMixin, DetailView):
-#     model = User
-#     template_name = 'users/profile.html'
 @login_required
 def profile(request, user_id):
+    """Profile view data"""
+    
     user = request.user
-
     # Para buscar si el usuario tiene avatar
     try:
         avatar = Avatar.objects.get(user=request.user.id)
         avatar = avatar.avatar.url
     except:
         avatar = ''
-
-    # # Messages
-    # messages = Message.objects.filter(Q(reseiver=user) | Q(sender=user))
-
-
-
 
     context = {
         'user': user,
@@ -106,8 +99,9 @@ def profile(request, user_id):
     return render(request, 'users/profile.html', context)
 
 
+@login_required
 def update_avatar(request):
-    """Update user profile."""
+    """Update user's avatar."""
     
     user = request.user
     # Para buscar si el usuario tiene avatar
@@ -134,7 +128,8 @@ def update_avatar(request):
             else:
                 new_avatar = Avatar(user=user, avatar=form.cleaned_data['avatar'])
                 new_avatar.save()
-        return redirect("Profile")
+        
+        return redirect(reverse('users:Profile', args=[id]))
     
     context = {
         'title': 'Update Avatar',
@@ -145,14 +140,19 @@ def update_avatar(request):
     return render(request, 'users/update_avatar.html', context)
 
 
-
 @login_required
 def messages(request):
+    """Inbox view"""
     
     user = request.user
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
     
     messages = Message.objects.filter(Q(receiver=user) | Q(sender=user)).order_by('-sent_at')
-
     received = messages.filter(receiver=user).order_by('-sent_at')
     sent = messages.filter(sender=user).order_by('-sent_at')
 
@@ -161,17 +161,17 @@ def messages(request):
         'user': user,
         'messages': messages,
         'received': received,
-        'sent':sent
+        'sent':sent,
+        'avatar': avatar,
     }
-
     return render(request, 'users/messages.html', context)
 
 
+@login_required
 def new_message(request):
     """Sending new messages."""
     
     user = request.user
-
     # Para buscar si el usuario tiene avatar
     try:
         avatar = Avatar.objects.get(user=request.user.id)
@@ -186,15 +186,11 @@ def new_message(request):
     else:
         # Data submitted. Paso formulario con datos ingresados por POST
         form = MessageForm(data=request.POST)
-
         if form.is_valid():
 
             msg = form.save(commit=False)
             msg.sender = request.user
             msg.save()
-            # data = form.cleaned_data
-
-            # msg = Message(sender=request.user, receiver=data['receiver'], msg=data['msg'])
 
             return redirect('users:Messages')
     
@@ -206,8 +202,10 @@ def new_message(request):
     return render(request, 'users/new_msg.html', context)
 
 
+@login_required
 def delete_msg(request, msg_id):
     """View for deleting msg."""
+
     # Try para buscar promo por id
     try:
         msg = Message.objects.get(id=msg_id)
