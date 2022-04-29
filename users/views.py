@@ -21,7 +21,6 @@ def register(request):
 
     if request.method != 'POST':
         # No data submited. Paso formulario vacio
-        # form = UserCreationForm() replaced by customized RegisterForm (from users/forms.py)
         form = RegisterForm()
 
     else:
