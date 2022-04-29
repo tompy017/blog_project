@@ -13,6 +13,7 @@ from users.forms import RegisterForm, UpdateProfileForm, MessageForm, AvatarForm
 from users.models import Avatar, Message
 
 
+
 # Create your views here.
 
 
@@ -214,3 +215,6 @@ def delete_msg(request, msg_id):
     # Si levanta una excepcion renderiza a la pagina de inicio
     except Exception as exc:
         return redirect('blogapp:Inicio')
+
+
+
