@@ -1,18 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    
-{% load static %}    
-    
+    {% load static %}
+
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eliminar Post</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <title>{{title}}</title>
     <link rel="icon" type="image/x-icon" href="{% static 'blogapp/img/icons8-airplane-take-off-64.png' %}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-
 <body>
     <!-- Navbar -->
     {% include 'blogapp/components/navbar.html' %}
@@ -25,10 +23,18 @@
         </div>
     </div>
 
-    <!-- Template's block -->
-    <div class="w3-container w3-sand">
-        {% block main_content %}
-        {% endblock main_content %}
-    </div>
+    <form method="POST">
+        {% csrf_token %}
+        
+        ¿Estás seguro que deseas borrar el post <b>"{{object}}"?</b><br>
+        ¡Esta acción es irreversible!
+        
+        <div class="w3-bar w3-padding-32 w3-center">
+            <input button type="submit" class="w3-button w3-round-large w3-button w3-large w3-red" value="Eliminar">
+            <a button type="button" class="w3-button w3-round-large w3-button w3-large w3-indigo" href=" {% url 'blogapp:Posts' %} ">Volver</button></a>
+        </div>
+    </form>
+
+    
 </body>
 </html>

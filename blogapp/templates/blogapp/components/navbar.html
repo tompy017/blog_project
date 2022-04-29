@@ -1,5 +1,4 @@
-{% load static %}
-
+<!-- Navbar icons -->
 <div class="w3-bar w3-black w3-border w3-padding-large">
 
     <a href="{% url 'blogapp:Inicio' %}" class="w3-bar-item w3-button w3-blue"><i class="fa fa-plane"> Home</i></a>
@@ -11,7 +10,6 @@
     <!-- Dropdown list -->
     {% if user.is_authenticated %}
         <div class="w3-dropdown-hover w3-right">
-
 
             <button class="w3-button w3-small">
                 <img class="w3-circle" width="20px" src="{{avatar}}"></img>
@@ -29,5 +27,4 @@
         <a button class="w3-bar-item w3-button w3-round-large w3-button w3-blue w3-right w3-margin-left" href="{% url 'users:register' %}"><b>Sign up</b></a>
         <a button class="w3-bar-item w3-button w3-round-large w3-button w3-blue w3-right" href="{% url 'users:login' %}"><b>Log in</b></a>
     {% endif %}
-
 </div>

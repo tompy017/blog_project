@@ -8,6 +8,7 @@ from blogapp.models import Post, Promo
 
 class NuevoPost(forms.ModelForm):
     """Form to add new posts."""
+    
     class Meta:
         model = Post  # Modelo del cual importa
         fields = [
@@ -22,6 +23,7 @@ class NuevoPost(forms.ModelForm):
 
 class AgregarPromo(forms.ModelForm):
     """Form to add new promos."""
+
     class Meta:
         model = Promo
         fields = [

@@ -1,8 +1,10 @@
+"""Models for blog (Posts and Promos)."""
 
 from django.db import models
 
 
 # Create your models here.
+
 
 class Post(models.Model):
     """La entrada de texto para cada ciudad."""
@@ -28,7 +30,6 @@ class Promo(models.Model):
     categoria = models.CharField(max_length=50)
     descripcion = models.CharField(max_length=120)
     detalle = models.CharField(max_length=120)
-    # valid_through = models.DateField()
 
     def __str__(self):
         return f"{self.categoria} | {self.descripcion}"

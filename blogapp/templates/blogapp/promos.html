@@ -1,6 +1,5 @@
 {% extends 'blogapp/base.html' %}
 
-<body>
 
 {% block main_content %}
 {% block promos %}
@@ -39,6 +38,8 @@
     {% endif %}
   </div>
   {% csrf_token %}
+  
+
   <!-- Tabla -->
   <div class="w3-container">
     <table class="w3-table-all w3-hoverable">
@@ -84,5 +85,3 @@
 {% endblock promos %}
 {% endblock main_content %}
 
-
-</body>

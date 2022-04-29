@@ -2,12 +2,12 @@
 
 {% block main_content  %}
 
-
+<!-- Form -->
 {% if form.errors  %}
     <h5 style="color: red">Nombre de usuario o contraseña incorrectos.</h5>
 {% endif %}
    
-
+<!-- Formulario inicio secion -->
 <form action="{% url 'users:login' %}" method="POST">
     {% csrf_token %}
     <table class="w3-table w3-topbar w3-bottombar w3-border-indigo w3-round">
