@@ -1,6 +1,8 @@
 """Views for blog; home, posts and promos"""
 
 from django.shortcuts import render, redirect
+# CBV
+from django.views.generic.edit import DeleteView
 # Decorators
 from django.contrib.auth.decorators import login_required
 # My models and forms
@@ -164,32 +166,32 @@ def agregar_post(request):
     return render(request, 'blogapp/new_post.html', context)
 
 
-@login_required
-def delete_post(request, post_id):
-    """View for deleting posts."""
+# @login_required
+# def delete_post(request, post_id):
+#     """View for deleting posts."""
 
-    # Try para obtener post por medio de su id con metodo get 
-    try:
-        post = Post.objects.get(id=post_id)
-        post.delete()
-        return redirect('blogapp:Posts')
-    # Si levanta una excepcion ya que no obtuvo registro
-    except Exception as exc:
-        return redirect('blogapp:Inicio')
+#     # Try para obtener post por medio de su id con metodo get 
+#     try:
+#         post = Post.objects.get(id=post_id)
+#         post.delete()
+#         return redirect('blogapp:Posts')
+#     # Si levanta una excepcion ya que no obtuvo registro
+#     except Exception as exc:
+#         return redirect('blogapp:Inicio')
 
 
-@login_required
-def delete_promo(request, promo_id):
-    """View for deleting promos."""
+# @login_required
+# def delete_promo(request, promo_id):
+#     """View for deleting promos."""
 
-    # Try para buscar promo por id
-    try:
-        promo = Promo.objects.get(id=promo_id)
-        promo.delete()
-        return redirect('blogapp:Promos')
-    # Si levanta una excepcion renderiza a la pagina de inicio
-    except Exception as exc:
-        return redirect('blogapp:Inicio')
+#     # Try para buscar promo por id
+#     try:
+#         promo = Promo.objects.get(id=promo_id)
+#         promo.delete()
+#         return redirect('blogapp:Promos')
+#     # Si levanta una excepcion renderiza a la pagina de inicio
+#     except Exception as exc:
+#         return redirect('blogapp:Inicio')
 
 
 @login_required
@@ -281,3 +283,15 @@ def post_detail(request, post_id):
         'post': post
     }
     return render(request, 'blogapp/post_detail.html', context)
+
+
+# Class Based Views
+
+class DeletePromo(DeleteView):
+    model = Promo
+    success_url = '/promos/'
+
+
+class DeletePost(DeleteView):
+    model = Post
+    success_url = '/pages/'
