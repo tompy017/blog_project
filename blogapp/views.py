@@ -270,3 +270,22 @@ class DeletePromo(LoginRequiredMixin, DeleteView):
 class DeletePost(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = '/pages/'
+
+
+def about(request):
+    """About context."""
+
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    context = {
+        'avatar': avatar,
+        'title': 'About',
+        'message': 'Bienvenidos a City Travel',
+        'subtitle': 'About'
+        }
+    return render(request, 'blogapp/about.html', context)

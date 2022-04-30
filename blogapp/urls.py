@@ -21,4 +21,6 @@ urlpatterns = [
     path('pages/delete_post/<int:pk>', DeletePost.as_view(), name='DeletePost'),
     path('pages/edit_post/<post_id>/', edit_post, name='EditPost'),
     path('pages/<post_id>/', post_detail, name='PostDetail'),
+    # About
+    path('about/', about, name='About'),
 ]

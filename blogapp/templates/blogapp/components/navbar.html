@@ -5,7 +5,7 @@
     <a href="{% url 'blogapp:Posts' %}" class="w3-bar-item w3-button"><i class="fa fa-list-ul"></i> Posts</a>
     <a href="{% url 'blogapp:Promos' %}" class="w3-bar-item w3-button"><i class="fa fa-bookmark-o"></i> Promos</a>
  
-    <a href="#" class="w3-bar-item w3-button"><i class="fa fa-info-circle"></i> About</a>
+    <a href="{% url 'blogapp:About' %}" class="w3-bar-item w3-button"><i class="fa fa-info-circle"></i> About</a>
 
     <!-- Dropdown list -->
     {% if user.is_authenticated %}
