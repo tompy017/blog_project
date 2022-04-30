@@ -23,16 +23,17 @@ class NuevoPost(forms.ModelForm):
 
 class AgregarPromo(forms.ModelForm):
     """Form to add new promos."""
-
     class Meta:
         model = Promo
         fields = [
             'categoria',
             'descripcion',
-            'detalle'
+            'detalle',
+            'valid_through',
         ]
         # Widgets para agrandar el area de texto(CharField) a 80 columnas
         widgets = {
             'descripcion': forms.TextInput(attrs={'size': '80'}),
             'detalle': forms.TextInput(attrs={'size': '80'}),
+            'valid_through': forms.SelectDateWidget(),
         }

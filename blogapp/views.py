@@ -4,11 +4,13 @@ from django.shortcuts import render, redirect
 # CBV
 from django.views.generic.edit import DeleteView
 # Decorators
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 # My models and forms
 from blogapp.models import Post, Promo
 from blogapp.forms import NuevoPost, AgregarPromo
 from users.models import Avatar
+
 
 
 # Create your views here.
@@ -43,7 +45,8 @@ def promos(request):
         avatar = ''
     
     # Defino variable conteniendo todas las promociones  
-    promos = Promo.objects.all()
+    promos = Promo.objects.order_by('-valid_through')
+    
     # Buscar promos por categoria
     category = request.GET.get('categoria')
 
@@ -166,34 +169,6 @@ def agregar_post(request):
     return render(request, 'blogapp/new_post.html', context)
 
 
-# @login_required
-# def delete_post(request, post_id):
-#     """View for deleting posts."""
-
-#     # Try para obtener post por medio de su id con metodo get 
-#     try:
-#         post = Post.objects.get(id=post_id)
-#         post.delete()
-#         return redirect('blogapp:Posts')
-#     # Si levanta una excepcion ya que no obtuvo registro
-#     except Exception as exc:
-#         return redirect('blogapp:Inicio')
-
-
-# @login_required
-# def delete_promo(request, promo_id):
-#     """View for deleting promos."""
-
-#     # Try para buscar promo por id
-#     try:
-#         promo = Promo.objects.get(id=promo_id)
-#         promo.delete()
-#         return redirect('blogapp:Promos')
-#     # Si levanta una excepcion renderiza a la pagina de inicio
-#     except Exception as exc:
-#         return redirect('blogapp:Inicio')
-
-
 @login_required
 def edit_post(request, post_id):
     """Edit an existing post."""
@@ -287,11 +262,30 @@ def post_detail(request, post_id):
 
 # Class Based Views
 
-class DeletePromo(DeleteView):
+class DeletePromo(LoginRequiredMixin, DeleteView):
     model = Promo
     success_url = '/promos/'
 
 
-class DeletePost(DeleteView):
+class DeletePost(LoginRequiredMixin, DeleteView):
     model = Post
     success_url = '/pages/'
+
+
+def about(request):
+    """About context."""
+
+    # Para buscar si el usuario tiene avatar
+    try:
+        avatar = Avatar.objects.get(user=request.user.id)
+        avatar = avatar.avatar.url
+    except:
+        avatar = ''
+
+    context = {
+        'avatar': avatar,
+        'title': 'About',
+        'message': 'Bienvenidos a City Travel',
+        'subtitle': 'About'
+        }
+    return render(request, 'blogapp/about.html', context)

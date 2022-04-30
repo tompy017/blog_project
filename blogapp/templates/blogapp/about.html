@@ -1,0 +1,39 @@
+{% extends 'blogapp/base.html' %}
+{% block main_content %}
+
+<div class="w3-container w3-indigo w3-round-large w3-padding-16 w3-center">
+    <h1>{{title}}</h1>
+</div>
+
+
+<div class="w3-container w3-round-large w3-padding-16 w3-margin-top w3-margin-bottom">
+    <div class="w3-card-4 w3-margin-top">
+        <header class="w3-container">
+            <h1>Acerca de mi:</h1>
+        </header>
+        <div class="w3-container">
+            <h4>Soy un apasionado por la tecnología.</h4>
+            <h4>Desde pequeño siempre me ha asombrado lo que se puede lograr por medio de una computadora y la manera de darle instrucciones a la misma.
+                Por cuestiones de la vida, años mas tarde he vuelto a esta pasión que tengo con las expéctativas de poder trabajar de lo que me gusta.
+                Siempre trato de mantenerme informado sobre las nuevas herramientas que van surgiendo, leyendo, participando en foros, etc.
+                Este blog es parte del desafío final del curso de Coderhouse sobre Python y donde hemos visto el framework de aplicaciones web open-source Django
+            </h4>
+        </div>
+</div>
+
+<div class="w3-container w3-round-large w3-padding-16 w3-margin-top w3-margin-bottom">
+    <div class="w3-card-4 w3-margin-top">
+        <div class="w3-container w3-padding-16 w3-margin-top">
+            <h5>Para contactarse conmigo pueden enviarme un e-mail a: 
+            <a href = "mailto: tomasborelli@pm.me">tomasborelli@pm.me</a></h5>
+        </div>
+    </div>
+</div>
+
+<!-- Botones -->
+<div class="w3-bar w3-padding-32 w3-center">
+    <a button type="button" class="w3-button w3-round-large w3-large w3-indigo" href=" {% url 'blogapp:Inicio' %} ">Volver</button></a>
+</div>
+
+
+{% endblock main_content %}

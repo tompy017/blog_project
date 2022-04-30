@@ -48,6 +48,7 @@
           <th>Categoria</th>
           <th>Descripcion</th>
           <th>Detalle</th>
+          <th>Válido hasta</th>
           <th></th>
         </tr>
       </thead>
@@ -57,6 +58,7 @@
             <th>{{promo.categoria}}</th>
             <td>{{promo.descripcion}}</td>
             <td>{{promo.detalle}}</td>
+            <td>{{promo.valid_through}}</td>
             <td>
               {% if user.is_authenticated %}
                 <a href="{% url 'blogapp:DeletePromo' promo.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-trash"></i> Borrar</a>
