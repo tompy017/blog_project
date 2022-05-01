@@ -55,3 +55,9 @@ El blog cuenta con una **barra de navegación** a la cual se puede acceder a las
 Además en el margen derecho podrás ingresar o crear un usuario.  
 Al estar logueado en el margen derecho se muestra el nombre de usuario, y avatar si corresponde, con un menú desplegable donde se puede acceder al Perfil,
 a sus mensajes y cerrar la sesión.
+
+
+***
+### Video explicativo
+
+[[youtube-{16by9}-{45bJle669qw}]] 
