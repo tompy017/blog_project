@@ -12,9 +12,11 @@ class Post(models.Model):
 
     city = models.CharField(max_length=60)
     title = models.CharField(max_length=60, unique=True)
+    subtitle = models.CharField(max_length=60)
     content = models.TextField()
     author = models.CharField(max_length=60)
     date_added = models.DateTimeField(auto_now_add=True)
+
 
     class Meta:
         # Nombres a mostrar en singular y plural (admin panel)

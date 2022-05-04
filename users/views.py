@@ -193,7 +193,7 @@ def new_message(request):
             msg.sender = request.user
             msg.save()
 
-            return redirect('users:Messages')
+            return redirect('blogapp:Messages')
     
     context = {
         'form': form,
@@ -211,7 +211,7 @@ def delete_msg(request, msg_id):
     try:
         msg = Message.objects.get(id=msg_id)
         msg.delete()
-        return redirect('users:Messages')
+        return redirect('blogapp:Messages')
     # Si levanta una excepcion renderiza a la pagina de inicio
     except Exception as exc:
         return redirect('blogapp:Inicio')

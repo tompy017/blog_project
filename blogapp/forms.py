@@ -14,8 +14,9 @@ class NuevoPost(forms.ModelForm):
         fields = [
             'city',
             'title',
+            'subtitle',
             'content',
-            'author'
+            'author',
             ]
         #  Widget para agrandar el area de texto(TextField) a 80 columnas
         widgets = {'content': forms.Textarea(attrs={'cols': 80})}
