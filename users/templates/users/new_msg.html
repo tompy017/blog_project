@@ -12,7 +12,7 @@
 
 <!-- Formulario nuevo mensage -->
 <div class="w3-container w3-padding-16">
-    <form action="{% url 'users:NewMsg' %}" method="POST">
+    <form action="{% url 'blogapp:NewMsg' %}" method="POST">
         {% csrf_token %}
         <table class="w3-table-all w3-card-4">
             {{form.as_table}}
@@ -21,7 +21,7 @@
         <!-- Botones -->
         <div class="w3-bar w3-padding-32">
             <input button type="submit" class="w3-bar-item  w3-right w3-button w3-white w3-border w3-border-indigo w3-round-large" value="Send">
-            <a button type="button" class="w3-button w3-white w3-border w3-border-indigo w3-round-large" href=" {% url 'users:Messages' %} ">Volver</button></a>
+            <a button type="button" class="w3-button w3-white w3-border w3-border-indigo w3-round-large" href=" {% url 'blogapp:Messages' %} ">Volver</button></a>
         </div>
     </form>
 </div>
