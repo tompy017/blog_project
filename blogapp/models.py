@@ -14,7 +14,7 @@ class Post(models.Model):
     title = models.CharField(max_length=60, unique=True)
     subtitle = models.CharField(max_length=60)
     content = models.TextField()
-    author = models.CharField(max_length=60)
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
 
     class Meta:

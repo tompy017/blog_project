@@ -158,7 +158,10 @@ def agregar_post(request):
         # Data submitted. Paso formulario con datos ingresados por POST
         form = NuevoPost(request.POST)
         if form.is_valid():
-            form.save()
+            new_post = form.save(commit=False)
+            new_post.author = request.user
+            new_post.save()
+           
             return redirect('blogapp:Posts')
 
     context = {

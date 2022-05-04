@@ -23,7 +23,11 @@
 <!-- Botones -->
 <div class="w3-bar w3-padding-32">
 <a button type="button" class="w3-button w3-round-large w3-large w3-indigo" href=" {% url 'blogapp:Posts' %} ">Volver</button></a>
-<a href="{% url 'blogapp:EditPost' post.id %}" class="w3-button w3-round-large w3-large w3-indigo w3-right"><i class="fa fa-edit"></i> Editar</a>
+
+<!-- Solo autor del posts puede modificar/eliminar -->
+{% if request.user == post.author %}
+    <a href="{% url 'blogapp:EditPost' post.id %}" class="w3-button w3-round-large w3-large w3-indigo w3-right"><i class="fa fa-edit"></i> Editar</a>
+{% endif %}
 </div>
 
 {% endblock posts %}

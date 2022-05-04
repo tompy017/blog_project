@@ -61,7 +61,7 @@
                         <td>{{post.author}}</td>
                         <td>{{post.date_added}}</td>
                         <td> 
-                            {% if user.is_authenticated %}
+                            {% if request.user == post.author %}
                             <!-- Botones de tabla -->
                             <a href="{% url 'blogapp:DeletePost' post.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-trash"></i> Borrar</a>
                             <a href="{% url 'blogapp:EditPost' post.id %}" class="w3-button w3-round w3-indigo w3-small"><i class="fa fa-edit"></i> Editar</a>
