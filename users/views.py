@@ -8,6 +8,8 @@ from django.contrib.auth.decorators import login_required
 # For make complex lookups (AND/OR)
 from django.db.models import Q
 
+from django.contrib.auth.decorators import user_passes_test
+
 # Defined User's models and forms
 from users.forms import RegisterForm, UpdateProfileForm, MessageForm, AvatarForm
 from users.models import Avatar, Message
@@ -99,8 +101,8 @@ def profile(request, user_id):
     }
     return render(request, 'users/profile.html', context)
 
-
-@login_required
+# Decorator only superusers can change the avatar (consigna)
+@user_passes_test(lambda u: u.is_superuser)
 def update_avatar(request):
     """Update user's avatar."""
     

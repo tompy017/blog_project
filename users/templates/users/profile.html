@@ -9,16 +9,18 @@
 
 {% block messages %}
 
-{% if avatar %}
-<div class="w3-card-4 w3-center w3-black w3-display-container">
-    <img class="w3-circle" height="400px" src="{{avatar}}" alt="avatar">
-    <div class="w3-display-bottommiddle w3-large w3-black"><a class="w3-button w3-black w3-border" title="Cambiar foto de perfil" href="{% url 'users:UpdateAvatar' %}"><i class="fa fa-file-image-o"></i></a></div>
-</div>
-{% else %}
-<div class="w3-card-4 w3-center w3-black w3-display-container">
-    <img src="{% static 'blogapp/img/empty_avatar.png' %}" class="w3-circle" height="400px" alt="avatar">
-    <div class="w3-display-middle w3-large w3-black"><a class="w3-button w3-black w3-border" title="Agregar foto de perfil" href="{% url 'users:UpdateAvatar' %}"><i class="fa fa-file-image-o"></i></a></div>
-</div>
+{% if user.is_superuser %}
+    {% if avatar %}
+    <div class="w3-card-4 w3-center w3-black w3-display-container">
+        <img class="w3-circle" height="400px" src="{{avatar}}" alt="avatar">
+        <div class="w3-display-bottommiddle w3-large w3-black"><a class="w3-button w3-black w3-border" title="Cambiar foto de perfil" href="{% url 'users:UpdateAvatar' %}"><i class="fa fa-file-image-o"></i></a></div>
+    </div>
+    {% else %}
+    <div class="w3-card-4 w3-center w3-black w3-display-container">
+        <img src="{% static 'blogapp/img/empty_avatar.png' %}" class="w3-circle" height="400px" alt="avatar">
+        <div class="w3-display-bottommiddle w3-large w3-black"><a class="w3-button w3-black w3-border" title="Agregar foto de perfil" href="{% url 'users:UpdateAvatar' %}"><i class="fa fa-file-image-o"></i></a></div>
+    </div>
+    {% endif %}
 {% endif %}
 
 <!-- Listado de datos usuario -->
