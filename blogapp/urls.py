@@ -24,7 +24,7 @@ urlpatterns = [
     path('pages/<post_id>/', post_detail, name='PostDetail'),
     # About
     path('about/', about, name='About'),
-    # Inbox
+    # Messages
     path('messages/', messages, name='Messages'),
     path('messages/delete/<msg_id>/', delete_msg, name='DeleteMsg'),
     path('messages/new_msg/', new_message, name='NewMsg'),

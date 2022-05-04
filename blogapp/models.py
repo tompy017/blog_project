@@ -17,14 +17,13 @@ class Post(models.Model):
     author = models.CharField(max_length=60)
     date_added = models.DateTimeField(auto_now_add=True)
 
-
     class Meta:
         # Nombres a mostrar en singular y plural (admin panel)
         verbose_name = 'entrada'
         verbose_name_plural = "entradas"
 
     def __str__(self):
-        return f"{self.city} - {self.title} - {self.content[:50]}[...]"
+        return f"{self.city} - {self.title} - {self.subtitle}"
 
 
 class Promo(models.Model):
