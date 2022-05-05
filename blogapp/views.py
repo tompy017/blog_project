@@ -156,7 +156,7 @@ def agregar_post(request):
     
     else:
         # Data submitted. Paso formulario con datos ingresados por POST
-        form = NuevoPost(request.POST)
+        form = NuevoPost(request.POST, request.FILES)
         if form.is_valid():
             new_post = form.save(commit=False)
             new_post.author = request.user

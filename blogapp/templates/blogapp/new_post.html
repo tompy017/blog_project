@@ -12,7 +12,7 @@
 {% endif %}
 
 <!-- Formulario nuevo post -->
-<form action="{% url 'blogapp:NewPost' %}" method="POST">
+<form enctype="multipart/form-data" action="{% url 'blogapp:NewPost' %}" method="POST">
     {% csrf_token %}
 
     <table class="w3-table w3-topbar w3-bottombar w3-border-indigo w3-round">

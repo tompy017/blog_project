@@ -16,6 +16,7 @@ class Post(models.Model):
     content = models.TextField()
     author = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     date_added = models.DateTimeField(auto_now_add=True)
+    image = models.ImageField(upload_to='post_images/', null=True, blank=True)
 
     class Meta:
         # Nombres a mostrar en singular y plural (admin panel)
