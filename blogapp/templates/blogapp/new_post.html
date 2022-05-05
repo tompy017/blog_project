@@ -12,6 +12,13 @@
 {% endif %}
 
 <!-- Formulario nuevo post -->
+
+<!-- IMPORTANTE: Para guardar imagenes el formulario debe tener un enctype="multipart/form-data", caso contrario
+no lo guarda (diccionario vacio
+Note that FILES will only contain data if the request method was POST 
+and the that posted to the request had enctype="multipart/form-data". 
+Otherwise, FILES will be a blank dictionary-like object.) -->
+
 <form enctype="multipart/form-data" action="{% url 'blogapp:NewPost' %}" method="POST">
     {% csrf_token %}
 
