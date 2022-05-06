@@ -1,5 +1,5 @@
 # blog_project
-### Blog project for Coderhouse's final
+### Blog project with Django
 
 ### Instrucciones:
 Instalar Python desde la [web oficial](https://www.python.org/downloads/)
