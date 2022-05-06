@@ -85,7 +85,7 @@ def update_profile(request):
 @login_required
 def profile(request, user_id):
     """Profile view data"""
-    
+    print(request)
     user = request.user
     # Para buscar si el usuario tiene avatar
     try:
